@@ -1,0 +1,29 @@
+{
+  "name": "sf-data-backup",
+  "version": "1.0.0",
+  "description": "Backup And Restore Salesforce Data",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start-dev": "npx nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Salesforce",
+    "Data",
+    "Backup"
+  ],
+  "author": "Syed Furqan Ahmed",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1",
+    "jsforce": "^1.11.0",
+    "pg": "^8.8.0",
+    "sequelize": "^6.23.2",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
