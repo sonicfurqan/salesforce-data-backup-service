@@ -1,3 +1,4 @@
+const { info, error } = require('winston');
 const logger = require('../utility/logger')
 const { generateCreateRecordQuery, generateUpdateRecordQuery } = require('../utility/schema');
 
@@ -29,6 +30,9 @@ const startObjectRecordsSync = async (objectApiName) => {
 
 
     transaction = await global.db.sequelize.transaction();
+
+    let insertCounter = 0, updateCounter = 0;
+
     global.sf.conn.bulk.query(sfQuery)
         .on('record', async function (rec) {
 
@@ -39,16 +43,27 @@ const startObjectRecordsSync = async (objectApiName) => {
 
             let [insertRecords, insertMetadata] = await global.db.query(query);
             logger.debug(`insert ${insertMetadata}`);
-
+            insertCounter += insertMetadata;
             if (insertMetadata == 0) {
                 let [updateRecords, updateMetadata] = await global.db.query(updateQuery);
                 logger.debug(`update ${updateMetadata.rowCount}`);
-
+                updateCounter += updateMetadata.rowCount;
             }
-
-
         })
-        .on('error', function (err) { console.error(err); });
+        .on('error', function (err) {
+            if(error.name=='PollingTimeout'){
+                //TODO:add RETRY function
+                //error.jobId
+                //error.batchId
+            }
+            console.error(err);
+            logger.error(JSON.stringify(err));
+        })
+        .on('finish', function resolve() {
+            logger.info(`insert count ${insertCounter} and update count ${updateCounter}`);
+            insertLogSync(objectApiName, 'data', 'create', insertCounter, 'Records Added');
+            insertLogSync(objectApiName, 'data', 'update', updateCounter, 'Records Added');
+        });
 
 
 
@@ -56,6 +71,17 @@ const startObjectRecordsSync = async (objectApiName) => {
 
 }
 
+
+const insertLogSync = (objectName, type, operation, count, description) => {
+
+
+    let query = `INSERT INTO "SyncLogs" ("name","type","operation","description","count","createdDate") 
+                                VALUES ('${objectName}','${type}','${operation}','${description}','${count}',CURRENT_TIMESTAMP)`;
+    global.db.query(query);
+
+}
+
 module.exports = {
-    startObjectRecordsSync
+    startObjectRecordsSync,
+    insertLogSync
 }

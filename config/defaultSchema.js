@@ -32,8 +32,38 @@ createSupportTables = async () => {
         timestamps: false
     });
 
+    let SyncLog= global.db.sequelize.define('SyncLog', {
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true
+        },
+        name: {
+            type: DataTypes.STRING(255),
+        },
+        type: {
+            type: DataTypes.STRING(255),
+        },
+        operation: {
+            type: DataTypes.STRING(255),
+        },
+        description: {
+            type: DataTypes.STRING(255),
+        },
+        count: {
+            type: DataTypes.INTEGER,
+        },
+        createdDate: {
+            type: DataTypes.DATE,
+        }
+    }, {
+        timestamps: false
+    });
+
     let objectResponse = await Object.sync();
+    let syncLogResponse = await SyncLog.sync();
     console.log('Created Table : ', objectResponse);
+    console.log('Created Table : ', syncLogResponse);
 
 }
 
