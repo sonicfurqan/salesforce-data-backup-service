@@ -8,9 +8,10 @@ dotenv.config();
 const Salesforce = require('./externalService/salesforce');
 const Database = require('./externalService/postgress');
 const logger = require('./utility/logger')
+const path = require('path');
 
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 const app = express()
 app.use(express.json());
@@ -20,6 +21,7 @@ function logRequest(req, res, next) {
     next()
 }
 
+app.use(express.static(path.join(__dirname, '../salesforce-data-backup-service-ui/.next')));
 
 app.use('/', require('./routes/routerIndex'));
 app.use('/salesforce', require('./routes/routerSalesforce'));
