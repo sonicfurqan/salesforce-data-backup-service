@@ -1,3 +1,5 @@
+
+import '../styles/salesforce-lightning-design-system.css'
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 
