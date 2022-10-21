@@ -1,9 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import styles from "/styles/index.module.css";
 
-const Home: NextPage = () => {
+import styles from "/styles/index.module.css"; 
+
+const GlobalObjectStatus: NextPage = () => {
   return (
     <div>
       <Head>
@@ -46,14 +47,9 @@ const Home: NextPage = () => {
                   Home
                 </h2>
                 <ul aria-describedby="entity-header">
-                  <li className="slds-nav-vertical__item slds-is-active">
+                  <li className="slds-nav-vertical__item ">
                     <Link href="/">
-                      <a
-                        className="slds-nav-vertical__action"
-                        aria-current="true"
-                      >
-                        Home
-                      </a>
+                      <a className="slds-nav-vertical__action">Home</a>
                     </Link>
                   </li>
                 </ul>
@@ -61,11 +57,15 @@ const Home: NextPage = () => {
                   Service
                 </h2>
                 <ul aria-describedby="entity-header">
-                  <li className="slds-nav-vertical__item">
-                    <Link href="service/globalObjectStatus">
-                      <a className="slds-nav-vertical__action">
-                        Global Object Status
-                      </a>
+                  <li className="slds-nav-vertical__item slds-is-active">
+                  <Link href="service/globalObjectStatus">
+                    <a
+                      
+                      className="slds-nav-vertical__action"
+                      aria-current="true"
+                    >
+                      Global Object Status
+                    </a>
                     </Link>
                   </li>
                   <li className="slds-nav-vertical__item">
@@ -88,7 +88,7 @@ const Home: NextPage = () => {
             </nav>
           </div>
           <div className="slds-col  slds-size_10-of-12 slds-grid slds-grid_vertical">
-             
+         
               <div className="slds-page-header">
                 <div className="slds-page-header__row">
                   <div className="slds-page-header__col-title">
@@ -101,13 +101,13 @@ const Home: NextPage = () => {
                                 className="slds-page-header__title slds-truncate"
                                 title="Rohde Corp - 80,000 Widgets"
                               >
-                                Overview
+                              Global Object Sync Management
                               </span>
                             </h1>
                           </div>
                         </div>
                         <p className="slds-page-header__name-meta">
-                          Description
+                          Manage Your org object metadata sync
                         </p>
                       </div>
                     </div>
@@ -133,4 +133,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default GlobalObjectStatus;
